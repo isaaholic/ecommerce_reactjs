@@ -3,11 +3,14 @@ import LetterIcon from "../assets/Letter.svg";
 import LockIcon from "../assets/Lock.svg";
 import Context from "../contexts/ContextWrapper";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [loginUser, setLoginUser] = useState({});
 
   const { setUser } = useContext(Context);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,7 +88,15 @@ function Login() {
         </div>
         <div className="flex justify-center w-full mt-[12px]">
           <p className="text-[#0F6450] font-semibold">
-            Do not have account? <span className="underline">Register</span>
+            Do not have account?{" "}
+            <span
+              className="underline hover:cursor-pointer"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
+              Register
+            </span>
           </p>
         </div>
       </div>

@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 function ProductView() {
   const [product, setProduct] = useState({});
   const [selectedImg, setSelectedImg] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(0);
+  const [selectedSize, setSelectedSize] = useState(0);
 
   let { id } = useParams();
 
@@ -30,7 +32,6 @@ function ProductView() {
   useEffect(() => {
     axios.get(`http://localhost:5000/api/products/${id}`).then((res) => {
       setProduct(res.data.product);
-      console.log(res.data.product);
     });
   }, []);
 
@@ -74,18 +75,24 @@ function ProductView() {
             <div className="mt-10">
               <p className="text-[18px] font-bold">SIZE:</p>
               <div className="flex gap-3">
-                <div className="flex border-[1.9px] border-zinc-900 w-[63px] h-[45px] justify-center items-center">
-                  <p>XS</p>
-                </div>
-                <div className="flex border-[1.9px] bg-zinc-900 border-zinc-900 w-[63px] h-[45px] justify-center items-center">
-                  <p className="text-white">S</p>
-                </div>
-                <div className="flex border-[1.9px] border-zinc-900 w-[63px] h-[45px] justify-center items-center">
-                  <p>M</p>
-                </div>
-                <div className="flex border-[1.9px] border-zinc-900 w-[63px] h-[45px] justify-center items-center">
-                  <p>L</p>
-                </div>
+                {product.size.map((s, key) => {
+                  console.log(s);
+                  return (
+                    <div
+                      onClick={() => {
+                        setSelectedSize(key);
+                      }}
+                      key={key}
+                      className={`${
+                        key === selectedSize
+                          ? "border-[2px] border-green-600"
+                          : "hover:cursor-pointer border-[1.9px] border-zinc-900"
+                      } flex  w-[63px] h-[45px] justify-center items-center`}
+                    >
+                      <p>{s}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </>
@@ -95,16 +102,21 @@ function ProductView() {
             <div className="mt-5">
               <p className="text-[18px] font-bold">COLOR:</p>
               <div className="flex gap-3">
-                {product.colors.map((color) => {
-                  console.log(color);
-                  let c = colorsHex[color.toLowerCase()];
-                  let cxs = "bg-[" + c + "]";
-                  console.log(cxs);
+                {product.colors.map((color, key) => {
                   return (
                     <>
                       {/* <div className="w-[32px] h-[32px] border-2 border-[#5ECE7B] bg-[#D3D2D5]"></div> */}
                       <div
-                        className={`${cxs} w-[32px] h-[32px] border-2 `}
+                        key={key}
+                        onClick={() => {
+                          setSelectedColor(key);
+                        }}
+                        style={{ backgroundColor: color }}
+                        className={`${
+                          key === selectedColor
+                            ? "border-[2px] border-green-600"
+                            : "hover:cursor-pointer border-[1.9px] border-zinc-900"
+                        } w-[32px] h-[32px] border-2 `}
                       ></div>
                     </>
                   );

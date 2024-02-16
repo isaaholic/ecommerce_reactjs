@@ -1,4 +1,3 @@
-import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 const Context = createContext();
@@ -13,6 +12,7 @@ export const ContextWrapper = ({ children }) => {
   });
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [selectedCurrency, setSelectedCurrency] = useState("$");
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   useEffect(() => {
     if (user.token !== sessionStorage.getItem("token")) {

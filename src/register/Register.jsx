@@ -4,11 +4,14 @@ import Context from "../contexts/ContextWrapper";
 import LetterIcon from "../assets/Letter.svg";
 import UserIcon from "../assets/UserRounded.svg";
 import LockIcon from "../assets/Lock.svg";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [registerUser, setRegisterUser] = useState({});
 
   const { setUser } = useContext(Context);
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -123,7 +126,15 @@ function Register() {
         </div>
         <div className="flex justify-center w-full mt-[12px]">
           <p className="text-[#0F6450] font-semibold">
-            Do you have account? <span className="underline">Log in</span>
+            Do you have account?{" "}
+            <span
+              className="underline hover:cursor-pointer"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Log in
+            </span>
           </p>
         </div>
       </div>
